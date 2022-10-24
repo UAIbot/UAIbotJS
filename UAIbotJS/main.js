@@ -1,13 +1,11 @@
-import * as utils from "./UAIbot.js";
-import * as simulation from "./simulation.js";
+import * as UAIbot from "./UAIbot.js";
 
-let sim = new simulation.Simulation();
-renderer.setAnimationLoop(() => {
-  fitWindow();
+let sim = new UAIbot.Simulation();
+let caixa = new UAIbot.Box(1, 1, 1, "green");
 
-  for (let i = 0; i < sceneElements.length; i++) {
-    sceneElements[i].nextFrame();
-  }
+sim.add(caixa);
 
-  renderer.render(scene, camera);
+sim.setAnimationLoop(() => {
+  caixa.rotate();
+  sim.render();
 });
