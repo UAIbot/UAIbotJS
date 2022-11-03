@@ -210,13 +210,40 @@ class Robot extends Objsim {
 
   catch(object){
     let mw = this.shape.getObjectByName("link6").getObjectByProperty("type", "AxesHelper").matrixWorld;
-    let p = [[ mw.elements[0], mw.elements[4], mw.elements[8], mw.elements[12]],
-             [ mw.elements[1], mw.elements[5], mw.elements[9], mw.elements[13]],
-             [ mw.elements[2], mw.elements[6], mw.elements[10], mw.elements[14]],
-             [ mw.elements[3], mw.elements[7], mw.elements[11], mw.elements[15]]];
-    object.setHTM(p);
-    //this.shape.getObjectByName("link5").add(object.shape);
-    console.log(this.shape.getObjectByName("link6").getObjectByProperty("type", "AxesHelper").matrixWorld);
+    let link6HTM = [[mw.elements[0], mw.elements[4],  mw.elements[8], mw.elements[12]],
+                    [mw.elements[1], mw.elements[5],  mw.elements[9], mw.elements[13]],
+                    [mw.elements[2], mw.elements[6], mw.elements[10], mw.elements[14]],
+                    [mw.elements[3], mw.elements[7], mw.elements[11], mw.elements[15]]];
+
+    let m4 = object.shape.matrix;
+    let objectHTM = [[m4.elements[0], m4.elements[4],  m4.elements[8], m4.elements[12]],
+                     [m4.elements[1], m4.elements[5],  m4.elements[9], m4.elements[13]],
+                     [m4.elements[2], m4.elements[6], m4.elements[10], m4.elements[14]],
+                     [m4.elements[3], m4.elements[7], m4.elements[11], m4.elements[15]]];
+
+    let qt = [[link6HTM[0][0], link6HTM[1][0], link6HTM[2][0]],
+              [link6HTM[0][1], link6HTM[1][1], link6HTM[2][1]],
+              [link6HTM[0][2], link6HTM[1][2], link6HTM[2][2]]];
+
+    let p = [[link6HTM[0][3]],
+             [link6HTM[1][3]],
+             [link6HTM[2][3]]];
+
+    let mqtp = math.multiply(-1, qt, p);
+    
+    let HTMinv = [[qt[0][0], qt[0][1], qt[0][2], mqtp[0][0]],
+                  [qt[1][0], qt[1][1], qt[1][2], mqtp[1][0]],
+                  [qt[2][0], qt[2][1], qt[2][2], mqtp[2][0]],
+                  [       0,        0,        0,          1]];
+
+    let newHTM = math.multiply(HTMinv, objectHTM);
+    object.setHTM(newHTM);
+    console.log(newHTM);
+    this.shape.getObjectByName("link6").add(object.shape);
+  }
+
+  release(){
+
   }
 
   create_kuka_kr5(){
