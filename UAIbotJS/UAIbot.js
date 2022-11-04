@@ -64,8 +64,8 @@ class Simulation {
 
   fitWindow() {
     //Function that makes scene fit browser window
-    this.renderer.setSize(window.innerWidth, window.innerHeight);
-    this.camera.aspect = window.innerWidth / window.innerHeight;
+    this.renderer.setSize(window.innerWidth-4, window.innerHeight-4);
+    this.camera.aspect = (window.innerWidth - 4) / (window.innerHeight - 4);
     this.camera.updateProjectionMatrix();
   }
 
@@ -214,7 +214,8 @@ class Robot extends Objsim {
   catch(object){
     if(!object.catched){
       object.catched = true;
-      let mw = this.shape.getObjectByName("link6").getObjectByProperty("type", "AxesHelper").matrixWorld;
+      let last_link = this.linkInfo[4].length - 1
+      let mw = this.shape.getObjectByName("link" + last_link.toString()).getObjectByProperty("type", "AxesHelper").matrixWorld;
       let link6HTM = [[mw.elements[0], mw.elements[4],  mw.elements[8], mw.elements[12]],
                       [mw.elements[1], mw.elements[5],  mw.elements[9], mw.elements[13]],
                       [mw.elements[2], mw.elements[6], mw.elements[10], mw.elements[14]],
@@ -243,12 +244,13 @@ class Robot extends Objsim {
   
       let newHTM = math.multiply(HTMinv, objectHTM);
       object.setHTM(newHTM);
-      this.shape.getObjectByName("link6").add(object.shape);
+      this.shape.getObjectByName("link" + last_link.toString()).add(object.shape);
     }
   }
 
   release(object){
     if(object.catched){
+      object.catched = false;
       let m4 = object.shape.matrixWorld;
       let objectHTM = [[m4.elements[0], m4.elements[4],  m4.elements[8], m4.elements[12]],
                        [m4.elements[1], m4.elements[5],  m4.elements[9], m4.elements[13]],
@@ -328,6 +330,64 @@ class Robot extends Objsim {
           sDOF.shape.getObjectByName("link6").add(root);
       });
       return sDOF
+  }
+
+  create_epson_t6(){
+    let link_info_t6 = [[    0,       0, 0], //"theta" rotation in z
+                        [  0.2,       0, 0],  // "d" translation in z
+                        [    0,    3.14, 0],  // "alfa" rotation in x
+                        [1.3/4, 1.1 / 4, 0],  // "a" translation in x
+                        [    0,       0, 1, 2]] //joint type
+    
+    let t6 = new Robot(link_info_t6);
+    const objLoader = new OBJLoader();
+
+    objLoader.load('https://raw.githubusercontent.com/viniciusmgn/uaibot_content/master/contents/EpsonT6/Base.obj', (root) => {
+      root.scale.set(0.001,0.001,0.001);
+      root.translateX(-0.062);
+      root.rotation.x = 3.14/2;
+      t6.shape.getObjectByName("base").getObjectByProperty("type", "AxesHelper").visible = false;
+      t6.shape.getObjectByName("base").getObjectByProperty("type", "Mesh").visible = false;
+      t6.shape.getObjectByName("base").add(root);
+    });
+
+    objLoader.load('https://raw.githubusercontent.com/viniciusmgn/uaibot_content/master/contents/EpsonT6/T6Axis1.obj', (root) => {
+      root.scale.set(0.001,0.001,0.001);
+      root.translateZ(0.2);
+      root.rotation.x = 3.14/2;
+      t6.shape.getObjectByName("link1").getObjectByProperty("type", "AxesHelper").visible = false;
+      t6.shape.getObjectByName("link1").getObjectByProperty("type", "Mesh").visible = false;
+      t6.shape.getObjectByName("link0").add(root);
+    });
+
+    objLoader.load('https://raw.githubusercontent.com/viniciusmgn/uaibot_content/master/contents/EpsonT6/T6Cable.obj', (root) => {
+      root.scale.set(0.001,0.001,0.001);
+      root.translateZ(0.44);
+      root.rotation.x = 3.14/2;
+      root.rotation.y = -3.14/2;
+      t6.shape.getObjectByName("link1").getObjectByProperty("type", "AxesHelper").visible = false;
+      t6.shape.getObjectByName("link1").getObjectByProperty("type", "Mesh").visible = false;
+      t6.shape.getObjectByName("link0").add(root);
+    });
+
+    objLoader.load('https://raw.githubusercontent.com/viniciusmgn/uaibot_content/master/contents/EpsonT6/T6Axis2.obj', (root) => {
+      root.scale.set(0.001,0.001,0.001);
+      root.rotation.x = 3.14/2;
+      root.translateX(0.275);
+      root.translateY(0.075);
+      t6.shape.getObjectByName("link2").getObjectByProperty("type", "AxesHelper").visible = false;
+      t6.shape.getObjectByName("link2").getObjectByProperty("type", "Mesh").visible = false;
+      t6.shape.getObjectByName("link1").add(root);
+    });
+
+    objLoader.load('https://raw.githubusercontent.com/viniciusmgn/uaibot_content/master/contents/EpsonT6/T6Axis3.obj', (root) => {
+      root.scale.set(0.001,0.001,0.001);
+      root.rotation.x = 3.14/2;
+      t6.shape.getObjectByName("link3").getObjectByProperty("type", "AxesHelper").visible = false;
+      t6.shape.getObjectByName("link3").getObjectByProperty("type", "Mesh").visible = false;
+      t6.shape.getObjectByName("link2").add(root);
+    });
+    return t6;
   }
 }
 
