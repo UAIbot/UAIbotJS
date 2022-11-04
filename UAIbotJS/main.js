@@ -23,7 +23,14 @@ sim.setAnimationLoop(() => {
   } else if (i == 100){
     bot.catch(caixa);
   }else if (i < 200){
+    bot.catch(caixa);
     bot.config([0, 1 - ((i-100)/100), -math.pi/3, 0, 1 - ((i-100)/100), 0]);
+  }else if (i< 300){
+    bot.config([0, (i-200)/100, -math.pi/3, 0, (i-200)/100, 0])
+  } else if (i == 300){
+    bot.release(caixa);
+  }else if (i < 400){
+    bot.config([0, 1 - ((i-300)/100), -math.pi/3, 0, 1 - ((i-300)/100), 0]);
   }
 
   i++;
