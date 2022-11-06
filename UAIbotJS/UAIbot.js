@@ -261,6 +261,65 @@ class Robot extends Objsim {
     }
   }
 
+  fkm(n = this.linkInfo[0].length){
+    let n_mw = this.shape.getObjectByName("link" + n.toString()).matrixWorld;
+    let n_HTM = [[n_mw.elements[0], n_mw.elements[4],  n_mw.elements[8], n_mw.elements[12]],
+                 [n_mw.elements[1], n_mw.elements[5],  n_mw.elements[9], n_mw.elements[13]],
+                 [n_mw.elements[2], n_mw.elements[6], n_mw.elements[10], n_mw.elements[14]],
+                 [n_mw.elements[3], n_mw.elements[7], n_mw.elements[11], n_mw.elements[15]]];
+    return n_HTM;
+  }
+
+  _jac_geo(axis = this.linkInfo[0].length){
+    let n = axis;
+    let jac_geo = math.zeros(6, n)._data;
+
+    for(let i = 1; i < (n+1); i++){
+      let j_1 = i - 1;
+      let j_1_HTM = this.fkm(j_1)
+      
+      let n_HTM = this.fkm(n)
+
+      let p_n = math.matrix([[n_HTM[0][3]],
+                             [n_HTM[1][3]],
+                             [n_HTM[2][3]]]);
+
+      let zj_1 = math.matrix([[j_1_HTM[0][2]],
+                              [j_1_HTM[1][2]],
+                              [j_1_HTM[2][2]]]);
+
+      let pj_1 = math.matrix([[j_1_HTM[0][3]],
+                              [j_1_HTM[1][3]],
+                              [j_1_HTM[2][3]]]);
+
+      if(this.linkInfo[4][i] == 0){
+        //position
+        let p_n_pj_1 = math.subtract(p_n, pj_1);
+        let pos = math.cross(zj_1, p_n_pj_1);
+        jac_geo[0][i -1] = pos._data[0][0];
+        jac_geo[1][i -1] = pos._data[0][1];
+        jac_geo[2][i -1] = pos._data[0][2];
+
+        //rotation
+        jac_geo[3][i -1] = zj_1._data[0][0];
+        jac_geo[4][i -1] = zj_1._data[1][0];
+        jac_geo[5][i -1] = zj_1._data[2][0];
+
+      }else{
+        //position
+        jac_geo[0][i -1] = zj_1._data[0][0];
+        jac_geo[1][i -1] = zj_1._data[1][0];
+        jac_geo[2][i -1] = zj_1._data[2][0];
+
+        //rotation
+        jac_geo[3][i -1] = 0;
+        jac_geo[4][i -1] = 0;
+        jac_geo[5][i -1] = 0;
+      }
+    }
+    return jac_geo;
+  }
+
   create_kuka_kr5(){
       let linkInfo6DOF = [[ 1.570, -1.570,  0.000,  0.000,  0.000,  0.000], // "theta" rotation in z
                           [ 0.335,  0.000,  0.000, -0.405,  0.000, -0.080], // "d" translation in z
