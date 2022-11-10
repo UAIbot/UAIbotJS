@@ -191,11 +191,15 @@ class Robot extends Objsim {
         this.shape = base;
         base.add(createLinks(this.linkInfo, 0.2));
         this.shape.matrixAutoUpdate = false;
+        this.q = [];
       }
   }
   
   //method that updates configuration
   config(q){
+    this.q = math.matrix([[q[0]],
+                          [q[1]],
+                          [q[2]]]);;
     if(q != undefined){
       let linkName = "";
       let j = 0;
@@ -272,6 +276,7 @@ class Robot extends Objsim {
 
   _jac_geo(axis = this.linkInfo[0].length){
     let n = axis;
+    let test = 0;
     let jac_geo = math.zeros(6, n)._data;
 
     for(let i = 1; i < (n+1); i++){
@@ -316,6 +321,7 @@ class Robot extends Objsim {
         jac_geo[4][i -1] = 0;
         jac_geo[5][i -1] = 0;
       }
+      test = jac_geo;
     }
     return jac_geo;
   }
