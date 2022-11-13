@@ -179,9 +179,14 @@ function dp_inv(mat, eps = 0.001){
             The damped pseudoinverse of 'mat'.
     */    
 
-    let n = math.size(mat)[0];
+    let nxm = math.size(mat);
+    let n = nxm._data[0];
+    let matTmat = math.multiply(math.transpose(mat), mat);
+    let epsident = math.multiply(eps, math.identity(n));
+    let temp = math.add(matTmat, epsident);
+    let inv = math.inv(temp);
 
-    return math.multiply(math.inv(math.add(math.multiply(math.trasnpose(mat), mat)), math.multiply(eps, math.identity(n))), math.transopse(mat));
+    return math.multiply( inv, math.transpose(mat));
 }
 
 export { s, rot, trn, rotx, roty, rotz, dp_inv};

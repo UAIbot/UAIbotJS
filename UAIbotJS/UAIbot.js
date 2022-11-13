@@ -78,7 +78,8 @@ class Objsim {
   constructor() {
     this.catched = false;
   }
-  setHTM(matrix){
+  setHTM(m){
+    let matrix = m._data;
     this.shape.matrix.set(      
       matrix[0][0], matrix[0][1], matrix[0][2], matrix[0][3],
       matrix[1][0], matrix[1][1], matrix[1][2], matrix[1][3],
@@ -135,7 +136,10 @@ class Frame extends Objsim{
       this.size = size;
       const axesHelper = new AxesHelper(this.size);
       axesHelper.matrixAutoUpdate = false;
-      this.shape = axesHelper;
+      const group = new Group();
+      group.matrixAutoUpdate = false;
+      group.add(axesHelper);
+      this.shape = group;
   }
 }
 
@@ -191,15 +195,19 @@ class Robot extends Objsim {
         this.shape = base;
         base.add(createLinks(this.linkInfo, 0.2));
         this.shape.matrixAutoUpdate = false;
-        this.q = [];
+        this.q = math.matrix([[0],
+                              [0],
+                              [-math.pi/4],
+                              [0],
+                              [0],
+                              [0]]);
       }
   }
   
   //method that updates configuration
-  config(q){
-    this.q = math.matrix([[q[0]],
-                          [q[1]],
-                          [q[2]]]);;
+  config(c){
+    this.q = c;
+    let q = this.q._data;
     if(q != undefined){
       let linkName = "";
       let j = 0;
@@ -267,10 +275,10 @@ class Robot extends Objsim {
 
   fkm(n = this.linkInfo[0].length){
     let n_mw = this.shape.getObjectByName("link" + n.toString()).matrixWorld;
-    let n_HTM = [[n_mw.elements[0], n_mw.elements[4],  n_mw.elements[8], n_mw.elements[12]],
-                 [n_mw.elements[1], n_mw.elements[5],  n_mw.elements[9], n_mw.elements[13]],
-                 [n_mw.elements[2], n_mw.elements[6], n_mw.elements[10], n_mw.elements[14]],
-                 [n_mw.elements[3], n_mw.elements[7], n_mw.elements[11], n_mw.elements[15]]];
+    let n_HTM = math.matrix([[n_mw.elements[0], n_mw.elements[4],  n_mw.elements[8], n_mw.elements[12]],
+                             [n_mw.elements[1], n_mw.elements[5],  n_mw.elements[9], n_mw.elements[13]],
+                             [n_mw.elements[2], n_mw.elements[6], n_mw.elements[10], n_mw.elements[14]],
+                             [n_mw.elements[3], n_mw.elements[7], n_mw.elements[11], n_mw.elements[15]]]);
     return n_HTM;
   }
 
@@ -285,17 +293,17 @@ class Robot extends Objsim {
       
       let n_HTM = this.fkm(n)
 
-      let p_n = math.matrix([[n_HTM[0][3]],
-                             [n_HTM[1][3]],
-                             [n_HTM[2][3]]]);
+      let p_n = math.matrix([[n_HTM._data[0][3]],
+                             [n_HTM._data[1][3]],
+                             [n_HTM._data[2][3]]]);
 
-      let zj_1 = math.matrix([[j_1_HTM[0][2]],
-                              [j_1_HTM[1][2]],
-                              [j_1_HTM[2][2]]]);
+      let zj_1 = math.matrix([[j_1_HTM._data[0][2]],
+                              [j_1_HTM._data[1][2]],
+                              [j_1_HTM._data[2][2]]]);
 
-      let pj_1 = math.matrix([[j_1_HTM[0][3]],
-                              [j_1_HTM[1][3]],
-                              [j_1_HTM[2][3]]]);
+      let pj_1 = math.matrix([[j_1_HTM._data[0][3]],
+                              [j_1_HTM._data[1][3]],
+                              [j_1_HTM._data[2][3]]]);
 
       if(this.linkInfo[4][j_1] == 0){
         //position
@@ -323,7 +331,7 @@ class Robot extends Objsim {
       }
       test = jac_geo;
     }
-    return jac_geo;
+    return math.matrix(jac_geo);
   }
 
   create_kuka_kr5(){
