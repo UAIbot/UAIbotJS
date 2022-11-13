@@ -1,4 +1,4 @@
-import * as UAIbot from "./UAIbot.js";
+import * as UAIbot from "../UAIbotJS/UAIbot.js";
 
 let sim = new UAIbot.Simulation();
 let bot = new UAIbot.Robot().create_epson_t6();

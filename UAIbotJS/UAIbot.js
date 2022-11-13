@@ -297,7 +297,7 @@ class Robot extends Objsim {
                               [j_1_HTM[1][3]],
                               [j_1_HTM[2][3]]]);
 
-      if(this.linkInfo[4][i] == 0){
+      if(this.linkInfo[4][j_1] == 0){
         //position
         let p_n_pj_1 = math.subtract(p_n, pj_1);
         let pos = math.cross(zj_1, p_n_pj_1);
