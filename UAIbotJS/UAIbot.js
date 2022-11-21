@@ -254,7 +254,7 @@ class Robot extends Objsim {
                     [qt[2][0], qt[2][1], qt[2][2], mqtp[2][0]],
                     [       0,        0,        0,          1]];
   
-      let newHTM = math.multiply(HTMinv, objectHTM);
+      let newHTM = math.matrix(math.multiply(HTMinv, objectHTM));
       object.setHTM(newHTM);
       this.shape.getObjectByName("link" + last_link.toString()).add(object.shape);
     }
@@ -268,12 +268,12 @@ class Robot extends Objsim {
                        [m4.elements[1], m4.elements[5],  m4.elements[9], m4.elements[13]],
                        [m4.elements[2], m4.elements[6], m4.elements[10], m4.elements[14]],
                        [m4.elements[3], m4.elements[7], m4.elements[11], m4.elements[15]]];
-      object.setHTM(objectHTM);
+      object.setHTM(math.matrix(objectHTM));
       this.shape.getObjectByName("base").add(object.shape);
     }
   }
 
-  fkm(n = this.linkInfo[0].length){
+  fkm(n = this.linkInfo[0].length, q = this.q){
     let n_mw = this.shape.getObjectByName("link" + n.toString()).matrixWorld;
     let n_HTM = math.matrix([[n_mw.elements[0], n_mw.elements[4],  n_mw.elements[8], n_mw.elements[12]],
                              [n_mw.elements[1], n_mw.elements[5],  n_mw.elements[9], n_mw.elements[13]],
