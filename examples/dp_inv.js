@@ -38,6 +38,10 @@ frames.setHTM(Tdes);
 let k = 7;
 let dt = 0.01;
 
+let histu = [];
+let histq = [];
+let histr = [];
+
 //loop principal
 let i = 0;
 sim.setAnimationLoop(() => {
@@ -124,10 +128,18 @@ sim.fitWindow();
         let u = math.multiply(Utils.dp_inv(jr), math.multiply(-k, r));
 
         let qprox =  math.add(bot.q, math.multiply(u, dt));
+
+        histq.push(qprox._data);
+        histr.push(r._data);
+        histu.push(u._data);
+
+        if(i == 300){
+            console.log(histq);
+            console.log(histr);
+            console.log(histu);
+        }
             
         bot.config(qprox);
-
-        console.log(u._data[0][0]);
 
         if(Math.abs(rpos._data[0][0]) < 0.001){
             translation = math.matrix([[Math.random()*0.4 + 0.1],
