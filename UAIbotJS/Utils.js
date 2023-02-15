@@ -1,11 +1,11 @@
+/**
+ * Returns a 3x3 matrix that implements the cross product for a 3D vector
+ * as a matricial product, that is, a matrix S(v) such that for any other
+ * 3D column  vector w, S(v)w = cross(v,w).
+ * @param {object} v 3x1 math.js matrix representing a 3D vector.
+ * @returns {object} 4x4 math.js matrix that implements the cross product with v.
+ */
 function s(v){
-    /**
-     * Returns a 3x3 matrix that implements the cross product for a 3D vector
-     * as a matricial product, that is, a matrix S(v) such that for any other
-     * 3D column  vector w, S(v)w = cross(v,w).
-     * @param {object} v 3x1 math.js matrix representing a 3D vector.
-     * @returns {object} 4x4 math.js matrix that implements the cross product with v.
-     */
 
     return math.matrix([[             0, -v._data[2][0],  v._data[1][0]],
                         [ v._data[2][0],              0, -v._data[0][0]],
@@ -13,13 +13,13 @@ function s(v){
 
 }
 
+/**
+ * Returns a Homogeneous transformation matrix that represents the rotation of an angle around an axis.
+ * @param {object} axis 3x1 math.js matrix representing the axis of rotation as a 3D vector.
+ * @param {number} angle The angle of rotation, in radians.
+ * @returns {object} 4x4 math.js matrix.
+ */
 function rot(axis, angle){
-    /**
-     * Returns a Homogeneous transformation matrix that represents the rotation of an angle around an axis.
-     * @param {object} axis 3x1 math.js matrix representing the axis of rotation as a 3D vector.
-     * @param {number} angle The angle of rotation, in radians.
-     * @returns {object} 4x4 math.js matrix.
-     */
 
     let norm_axis = math.multiply(1/(math.norm([axis._data[0][0], axis._data[1][0], axis._data[2][0]])), axis);
 
@@ -44,12 +44,13 @@ function rot(axis, angle){
     
 }
 
+/**
+ * Returns a Homogeneous transformation matrix that represents the displacement of a vector.
+ * @param {object} vector 3x1 math.js matrix representing the displacement vector.
+ * @return {object} 4x4 math.js matrix.
+ */
 function trn(vector){
-    /**
-     * Returns a Homogeneous transformation matrix that represents the displacement of a vector.
-     * @param {object} vector 3x1 math.js matrix representing the displacement vector.
-     * @return {object} 4x4 math.js matrix.
-     */
+
 
     return math.matrix([[ 1, 0, 0, vector._data[0][0]],
                         [ 0, 1, 0, vector._data[1][0]],
@@ -57,12 +58,12 @@ function trn(vector){
                         [ 0, 0, 0,                  1]]);
 }
 
+/**
+ * Returns a Homogeneous transformation matrix that represents the rotation around an angle in the 'x' axis.
+ * @param {number} angle The angle of rotation, in radians.
+ * @return {object} 4x4 math.js matrix.
+ */
 function rotx(angle){
-    /**
-     * Returns a Homogeneous transformation matrix that represents the rotation around an angle in the 'x' axis.
-     * @param {number} angle The angle of rotation, in radians.
-     * @return {object} 4x4 math.js matrix.
-     */
 
     let a22 = math.cos(angle);
     let a23 = -math.sin(angle);
@@ -75,12 +76,12 @@ function rotx(angle){
                         [   0,   0,   0, 1]]);
 }
 
+/**
+ * Returns a Homogeneous transformation matrix that represents the rotation around an angle in the 'y' axis.
+ * @param {number} angle The angle of rotation, in radians.
+ * @return {object} 4x4 math.js matrix.
+ */
 function roty(angle){
-    /**
-     * Returns a Homogeneous transformation matrix that represents the rotation around an angle in the 'y' axis.
-     * @param {number} angle The angle of rotation, in radians.
-     * @return {object} 4x4 math.js matrix.
-     */
 
     let a11 = math.cos(angle);
     let a13 = math.sin(angle);
@@ -93,12 +94,12 @@ function roty(angle){
                         [   0,   0,   0, 1]]);
 }
 
+/**
+ * Returns a Homogeneous transformation matrix that represents the rotation around an angle in the 'z' axis.
+ * @param {number} angle The angle of rotation, in radians.
+ * @return {object} 4x4 math.js matrix.
+ */
 function rotz(angle){
-    /**
-     * Returns a Homogeneous transformation matrix that represents the rotation around an angle in the 'z' axis.
-     * @param {number} angle The angle of rotation, in radians.
-     * @return {object} 4x4 math.js matrix.
-     */
 
     let a11 = math.cos(angle);
     let a12 = -math.sin(angle);
@@ -112,13 +113,13 @@ function rotz(angle){
 
 }
 
+/**
+ * Returns the damped pseudoinverse of the matrix 'mat'.
+ * @param {object} mat NxM math.js matrix.
+ * @param {number} eps The damping factor.
+ * @returns {object} MxN math.js matrix.
+ */
 function dp_inv(mat, eps = 0.001){
-    /**
-     * Returns the damped pseudoinverse of the matrix 'mat'.
-     * @param {object} mat NxM math.js matrix.
-     * @param {number} eps The damping factor.
-     * @returns {object} MxN math.js matrix.
-     */
 
     let nxm = math.size(mat);
     let n = nxm._data[0];
