@@ -24,60 +24,95 @@ import { OrbitControls } from "https://unpkg.com/three@0.126.1/examples/jsm/cont
 
 import { OBJLoader } from "https://unpkg.com/three@0.126.1/examples/jsm/loaders/OBJLoader.js";
 
+/**
+ * Represents a new simulation environment.
+ * @class
+ */
 class Simulation {
+  /**
+   * Creates a new simulation environment.
+   * @constructor
+   */
   constructor() {
-    Object3D.DefaultUp = new Vector3(0, 0, 1); //Pointing Z axis up
-    this.canvas = document.querySelector("#scene"); // Selecting canvas
-    this.scene = new Scene(); //Instantiate the Scene
-    this.scene.background = new Color("#DCDCDC"); //Set background color
+    Object3D.DefaultUp = new Vector3(0, 0, 1); 
+    this.canvas = document.querySelector("#scene"); 
+    this.scene = new Scene(); 
+    this.scene.background = new Color("#DCDCDC"); 
     this.camera = new PerspectiveCamera(
       35,
       this.canvas.clientWidth / this.canvas.clientHeight,
       0.1,
       100
-    ); //Instantiate a camera
-    this.camera.position.set(4, 4, 3); //Put camera in its place
-    this.ambientLight = new HemisphereLight("white", "darkslategrey", 3); //Instantiate Ambient light
-    this.controls = new OrbitControls(this.camera, this.canvas); //Instantiate orbit controls
-    this.controls.target.set(0, 0, 0); //Point camera at the origin
+    ); 
+    this.camera.position.set(4, 4, 3); 
+    this.ambientLight = new HemisphereLight("white", "darkslategrey", 3); 
+    this.controls = new OrbitControls(this.camera, this.canvas); 
+    this.controls.target.set(0, 0, 0); 
     let canvas = this.canvas;
-    this.renderer = new WebGLRenderer({ canvas, antialias: true }); //Instantiate renderer
-    this.renderer.physicallyCorrectLights = true; //Enable physically Correct Lights
-    this.renderer.setSize(canvas.clientWidth, canvas.clientHeight); //Set render size
-    this.renderer.setPixelRatio(window.devicePixelRatio); //Set pixel ratio
+    this.renderer = new WebGLRenderer({ canvas, antialias: true }); 
+    this.renderer.physicallyCorrectLights = true; 
+    this.renderer.setSize(canvas.clientWidth, canvas.clientHeight); 
+    this.renderer.setPixelRatio(window.devicePixelRatio); 
     this.sceneElements = [];
-    this.axesHelper = new AxesHelper(0.5); //Create axis helper
+    this.axesHelper = new AxesHelper(0.5); 
     this.axesHelper.renderOrder = 1;
-    this.gridHelper = new GridHelper(3, 6); //Create grid helper
+    this.gridHelper = new GridHelper(3, 6);
     this.gridHelper.rotation.x = 3.14 / 2;
     this.scene.add(this.ambientLight);
     this.scene.add(this.axesHelper);
     this.scene.add(this.gridHelper);
   }
+
+  /**
+   * Renders each frame.
+   */
   render() {
     this.renderer.render(this.scene, this.camera);
   }
 
+  /**
+   * Creates the animation loop.
+   * @param {undefined} loop_code code to be excecuted every loop.
+   */
   setAnimationLoop(loop_code) {
     this.renderer.setAnimationLoop(loop_code);
   }
 
+  /**
+   * Makes scene fit browser window.
+   */
   fitWindow() {
-    //Function that makes scene fit browser window
     this.renderer.setSize(window.innerWidth-4, window.innerHeight-4);
     this.camera.aspect = (window.innerWidth - 4) / (window.innerHeight - 4);
     this.camera.updateProjectionMatrix();
   }
 
+  /**
+   * Adds object to the scene.
+   * @param {object} object_sim Object to be added.
+   */
   add(object_sim) {
     this.scene.add(object_sim.shape);
   }
 }
 
+/**
+ * Represents any object that can be added to the scene.
+ * @class
+ */
 class Objsim {
+  /**
+   * Creates a class that represents any object that can be added to the scene.
+   * @constructor
+   */
   constructor() {
     this.catched = false;
   }
+
+  /**
+   * Sets the homogeneous transformation matrix that represents the position of the object as the position of the object.
+   * @param {object} m 4x4 math.js homogeneous transformation matrix that represents the position of the object.
+   */
   setHTM(m){
     let matrix = m._data;
     this.shape.matrix.set(      
@@ -88,7 +123,19 @@ class Objsim {
   }
 }
 
+/**
+ * Class representing a cuboid
+ * @extends Objsim
+ */
 class Box extends Objsim{
+  /**
+   * Creates a cuboid.
+   * @constructor
+   * @param {number} _width width of the cuboid in meters.
+   * @param {number} _height height of the cuboid in meters.
+   * @param {number} _depth depth of the cuboid in meters.
+   * @param {*} _color color of the cuboid in RGB/Hexadecimal/etc...
+   */
   constructor(_width, _height, _depth, _color) {
     super();
     this.width = _width;
@@ -103,7 +150,17 @@ class Box extends Objsim{
   }
 }
 
+/**
+ * Class representing a sphere.
+ * @extends Objsim
+ */
 class Ball extends Objsim{
+  /**
+   * Creates a sphere.
+   * @constructor
+   * @param {number} _radius radius of the sphere in meters.
+   * @param {*} _color color of the sphere in RGB/Hexadecimal/etc...
+   */
   constructor(_radius, _color){
       super();
       this.radius = _radius;
@@ -116,7 +173,18 @@ class Ball extends Objsim{
   }
 }
 
+/**
+ * Class representing a cylinder.
+ * @extends Objsim
+ */
 class Cylinder extends Objsim{
+  /**
+   * Creates a cylinder.
+   * @constructor
+   * @param {number} _radius radius of the cylinder in meters.
+   * @param {number} _height height of the cylinder in meters.
+   * @param {*} _color color of the cylinder in RGB/Hexadecimal/etc...
+   */
   constructor(_radius, _height, _color){
       super();
       this.radius = _radius;
@@ -130,7 +198,16 @@ class Cylinder extends Objsim{
   }
 }
 
+/**
+ * Class representing a cartesian reference frame.
+ * @class
+ */
 class Frame extends Objsim{
+  /**
+   * Creates a cartesian reference frame.
+   * @constructor
+   * @param {number} size lenght of the components of the frame in meters.
+   */
   constructor(size = 1){
       super();
       this.size = size;
@@ -143,17 +220,23 @@ class Frame extends Objsim{
   }
 }
 
+/**
+ * Class representing a generic open chain robotic manipulator.
+ */
 class Robot extends Objsim {
+  /**
+   * Creates a generic open chain robotic manipulator.
+   * @constructor
+   * @param {object} _linkInfo 5xN matrix representing the DH parameters that describe the robot.
+   */
   constructor(_linkInfo){
       super();
-      //creates a generic robot
       const base = new Group();
       base.name = "base";
       function createLinks(linkInfo, size){
           let links = [];
               for(let i = 0; i < linkInfo[0].length + 1; i++){
                   const link = new Group();
-                  //link.matrixAutoUpdate = false;
                   const axesHelper = new AxesHelper( size);
                   axesHelper.matrixAutoUpdate = false;
                   link.add(axesHelper)
@@ -204,7 +287,10 @@ class Robot extends Objsim {
       }
   }
   
-  //method that updates configuration
+  /**
+   * Sets robot configuration.
+   * @param {object} c math.js column matrix representing the robot configuration.
+   */
   config(c){
     this.q = c;
     let q = this.q._data;
@@ -223,6 +309,10 @@ class Robot extends Objsim {
     }
   }
 
+  /**
+   * Makes robot catch a scene object.
+   * @param {object} object Scene object to be catched.
+   */
   catch(object){
     if(!object.catched){
       object.catched = true;
@@ -260,6 +350,10 @@ class Robot extends Objsim {
     }
   }
 
+  /**
+   * Makes robot release a scene object.
+   * @param {object} object Scene object to be released.
+   */
   release(object){
     if(object.catched){
       object.catched = false;
@@ -273,15 +367,33 @@ class Robot extends Objsim {
     }
   }
 
+  /**
+   * Calculates the forward kinematics of the robot.
+   * @param {number} n DH referential for which the forward kinematics will be calculated.
+   * @param {object} q Configuration of the robot for the calculation of the forward kinematics.
+   * @returns 4x4 math.js homogeneous transformation matrix representing the forward kinematics. 
+   */
   fkm(n = this.linkInfo[0].length, q = this.q){
+    let old_q = this.q;
+
+    this.config(q);
+
     let n_mw = this.shape.getObjectByName("link" + n.toString()).matrixWorld;
     let n_HTM = math.matrix([[n_mw.elements[0], n_mw.elements[4],  n_mw.elements[8], n_mw.elements[12]],
                              [n_mw.elements[1], n_mw.elements[5],  n_mw.elements[9], n_mw.elements[13]],
                              [n_mw.elements[2], n_mw.elements[6], n_mw.elements[10], n_mw.elements[14]],
                              [n_mw.elements[3], n_mw.elements[7], n_mw.elements[11], n_mw.elements[15]]]);
+
+    this.config(old_q);
+
     return n_HTM;
   }
 
+  /**
+   * Calculates the geometric jacobian.
+   * @param {number} axis DH referential for which the geometric jacobian will be calculated.
+   * @returns 6xN math.js matrix representing the geometric jacobian.
+   */
   _jac_geo(axis = this.linkInfo[0].length){
     let n = axis;
     let test = 0;
@@ -334,6 +446,10 @@ class Robot extends Objsim {
     return math.matrix(jac_geo);
   }
 
+  /**
+   * Creates a KUKA KR5.
+   * @returns Robot object configured as a KUKA KR5.
+   */
   create_kuka_kr5(){
       let linkInfo6DOF = [[ 1.570, -1.570,  0.000,  0.000,  0.000,  0.000], // "theta" rotation in z
                           [ 0.335,  0.000,  0.000, -0.405,  0.000, -0.080], // "d" translation in z
@@ -405,6 +521,10 @@ class Robot extends Objsim {
       return sDOF
   }
 
+ /**
+   * Creates an Epson T6.
+   * @returns Robot object configured as an Epson T6.
+   */
   create_epson_t6(){
     let link_info_t6 = [[    0,       0, 0], //"theta" rotation in z
                         [  0.2,       0, 0],  // "d" translation in z
