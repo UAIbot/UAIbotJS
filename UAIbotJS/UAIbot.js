@@ -458,14 +458,14 @@ class Robot extends Objsim {
                           [ 0.000,  0.000,  0.000,  0.000,  0.000,  0.000,  2.000]];// kind of link
       let sDOF = new Robot(linkInfo6DOF);
       const objLoader = new OBJLoader();
-      objLoader.load('https://raw.githubusercontent.com/SetpointCapybara/kukakr5/main/models/Base.obj', (root) => {
+      objLoader.load('UAIbotJS/3d_models/kuka_kr5/Base.obj', (root) => {
           root.scale.set(0.001,0.001,0.001);
           root.rotation.x = 3.14/2;
           sDOF.shape.getObjectByName("base").getObjectByProperty("type", "AxesHelper").visible = false;
           sDOF.shape.getObjectByName("base").getObjectByProperty("type", "Mesh").visible = false;
           sDOF.shape.getObjectByName("base").add(root);
       });
-      objLoader.load('https://raw.githubusercontent.com/SetpointCapybara/kukakr5/main/models/Axis1.obj', (root) => {
+      objLoader.load('UAIbotJS/3d_models/kuka_kr5/Axis1.obj', (root) => {
           root.scale.set(0.001,0.001,0.001);
           root.rotation.x = 3.14/2;
           root.position.set(0, 0, 0.203);
@@ -474,7 +474,7 @@ class Robot extends Objsim {
           sDOF.shape.getObjectByName("link1").getObjectByProperty("type", "Mesh").visible = false;
           sDOF.shape.getObjectByName("link0").add(root);
       });
-      objLoader.load('https://raw.githubusercontent.com/SetpointCapybara/kukakr5/main/models/Axis2.obj', (root) => {
+      objLoader.load('UAIbotJS/3d_models/kuka_kr5/Axis2.obj', (root) => {
           root.scale.set(0.001,0.001,0.001);
           root.rotation.x = -3.14/2;
           root.rotation.z = 3.14;
@@ -484,7 +484,7 @@ class Robot extends Objsim {
           sDOF.shape.getObjectByName("link2").getObjectByProperty("type", "Mesh").visible = false;
           sDOF.shape.getObjectByName("link1").add(root);
       });
-      objLoader.load('https://raw.githubusercontent.com/SetpointCapybara/kukakr5/main/models/Axis3.obj', (root) => {
+      objLoader.load('UAIbotJS/3d_models/kuka_kr5/Axis3.obj', (root) => {
           root.scale.set(0.001,0.001,0.001);
           root.rotation.x = 3.14/2;
           root.rotation.z = -3.14/2;
@@ -493,7 +493,7 @@ class Robot extends Objsim {
           sDOF.shape.getObjectByName("link3").getObjectByProperty("type", "Mesh").visible = false;
           sDOF.shape.getObjectByName("link2").add(root);
       });
-      objLoader.load('https://raw.githubusercontent.com/SetpointCapybara/kukakr5/main/models/Axis4.obj', (root) => {
+      objLoader.load('UAIbotJS/3d_models/kuka_kr5/Axis4.obj', (root) => {
           root.scale.set(0.001,0.001,0.001);
           root.rotation.z = -3.14/2;
           root.rotation.x = 3.14/2;
@@ -502,7 +502,7 @@ class Robot extends Objsim {
           sDOF.shape.getObjectByName("link4").getObjectByProperty("type", "Mesh").visible = false;
           sDOF.shape.getObjectByName("link3").add(root);
       });
-      objLoader.load('https://raw.githubusercontent.com/SetpointCapybara/kukakr5/main/models/Axis5.obj', (root) => {
+      objLoader.load('UAIbotJS/3d_models/kuka_kr5/Axis5.obj', (root) => {
           root.scale.set(0.001,0.001,0.001);
           root.rotation.x = 3.14/2;
           root.position.set(0.0, 0.0, 0.0);
@@ -510,7 +510,7 @@ class Robot extends Objsim {
           sDOF.shape.getObjectByName("link5").getObjectByProperty("type", "Mesh").visible = false;
           sDOF.shape.getObjectByName("link4").add(root);
       });
-      objLoader.load('https://raw.githubusercontent.com/SetpointCapybara/kukakr5/main/models/Axis6.obj', (root) => {
+      objLoader.load('UAIbotJS/3d_models/kuka_kr5/Axis6.obj', (root) => {
           root.scale.set(0.001,0.001,0.001);
           root.rotation.x = 3.14/2;
           root.position.set(0.00, 0.0, -0.012);
@@ -535,7 +535,7 @@ class Robot extends Objsim {
     let t6 = new Robot(link_info_t6);
     const objLoader = new OBJLoader();
 
-    objLoader.load('https://raw.githubusercontent.com/viniciusmgn/uaibot_content/master/contents/EpsonT6/Base.obj', (root) => {
+    objLoader.load('UAIbotJS/3d_models/epson_t6/Base.obj', (root) => {
       root.scale.set(0.001,0.001,0.001);
       root.translateX(-0.062);
       root.rotation.x = 3.14/2;
@@ -544,7 +544,7 @@ class Robot extends Objsim {
       t6.shape.getObjectByName("base").add(root);
     });
 
-    objLoader.load('https://raw.githubusercontent.com/viniciusmgn/uaibot_content/master/contents/EpsonT6/T6Axis1.obj', (root) => {
+    objLoader.load('UAIbotJS/3d_models/epson_t6/T6Axis1.obj', (root) => {
       root.scale.set(0.001,0.001,0.001);
       root.translateZ(0.2);
       root.rotation.x = 3.14/2;
@@ -553,7 +553,7 @@ class Robot extends Objsim {
       t6.shape.getObjectByName("link0").add(root);
     });
 
-    objLoader.load('https://raw.githubusercontent.com/viniciusmgn/uaibot_content/master/contents/EpsonT6/T6Cable.obj', (root) => {
+    objLoader.load('UAIbotJS/3d_models/epson_t6/T6Cable.obj', (root) => {
       root.scale.set(0.001,0.001,0.001);
       root.translateZ(0.44);
       root.rotation.x = 3.14/2;
@@ -563,7 +563,7 @@ class Robot extends Objsim {
       t6.shape.getObjectByName("link0").add(root);
     });
 
-    objLoader.load('https://raw.githubusercontent.com/viniciusmgn/uaibot_content/master/contents/EpsonT6/T6Axis2.obj', (root) => {
+    objLoader.load('UAIbotJS/3d_models/epson_t6/T6Axis2.obj', (root) => {
       root.scale.set(0.001,0.001,0.001);
       root.rotation.x = 3.14/2;
       root.translateX(0.275);
@@ -573,7 +573,7 @@ class Robot extends Objsim {
       t6.shape.getObjectByName("link1").add(root);
     });
 
-    objLoader.load('https://raw.githubusercontent.com/viniciusmgn/uaibot_content/master/contents/EpsonT6/T6Axis3.obj', (root) => {
+    objLoader.load('UAIbotJS/3d_models/epson_t6/T6Axis3.obj', (root) => {
       root.scale.set(0.001,0.001,0.001);
       root.rotation.x = 3.14/2;
       t6.shape.getObjectByName("link3").getObjectByProperty("type", "AxesHelper").visible = false;
