@@ -24,6 +24,8 @@ import { OrbitControls } from "https://unpkg.com/three@0.126.1/examples/jsm/cont
 
 import { OBJLoader } from "https://unpkg.com/three@0.126.1/examples/jsm/loaders/OBJLoader.js";
 
+import * as math from 'https://cdn.jsdelivr.net/npm/mathjs@11.6.0/+esm'
+
 /**
  * Represents a new simulation environment.
  * @class

@@ -1,4 +1,5 @@
 import * as UAIbot from "../UAIbotJS/UAIbot.js";
+import * as math from 'https://cdn.jsdelivr.net/npm/mathjs@11.6.0/+esm'
 
 let sim = new UAIbot.Simulation();
 let bot = new UAIbot.Robot().create_kuka_kr5();

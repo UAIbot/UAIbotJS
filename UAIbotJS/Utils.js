@@ -1,3 +1,5 @@
+import * as math from 'https://cdn.jsdelivr.net/npm/mathjs@11.6.0/+esm'
+
 /**
  * Returns a 3x3 matrix that implements the cross product for a 3D vector
  * as a matricial product, that is, a matrix S(v) such that for any other

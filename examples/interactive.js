@@ -1,5 +1,6 @@
 import * as UAIbot from "../UAIbotJS/UAIbot.js";
 import * as Utils from "../UAIbotJS/Utils.js";
+import * as math from 'https://cdn.jsdelivr.net/npm/mathjs@11.6.0/+esm'
 
 function set_pose(Tdes){
     let p_de = math.matrix([[Tdes._data[0][3]],

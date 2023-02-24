@@ -1,5 +1,6 @@
 import * as UAIbot from "../UAIbotJS/UAIbot.js";
 import * as Utils from "../UAIbotJS/Utils.js";
+import * as math from 'https://cdn.jsdelivr.net/npm/mathjs@11.6.0/+esm'
 
 let links= [[ 1.570, -1.570,  0.000,  0.000,  0.000,  0.000], // "theta" rotation in z
             [ 0.335,  0.000,  0.000, -0.405,  0.000, -0.080], // "d" translation in z
