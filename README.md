@@ -45,4 +45,4 @@ This repository is maintained actively, so if you face any issue please  [raise 
 4.  Send a pull request.
 ## License
 
-The code is available under the  [MIT License](https://github.com/cferdinandi/atomic/blob/master/LICENSE.md).
+The code is available under the  [MIT License](https://github.com/UAIbot/UAIbotJS/blob/main/LICENSE.md).
