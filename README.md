@@ -13,6 +13,7 @@ This is a version of the UAIbot simulator entirely written in JavaScript. UAIBot
 
 ##  Getting Started
 **Direct Download**
+
 You can [download the files directly from GitHub](https://github.com/UAIbot/UAIbotJS/archive/master.zip) and import UAIbot as an ES6 module.
 
 ```javascript
@@ -23,6 +24,7 @@ import  *  as  UAIbot  from path/to/UAIbot.local.js
 In this case remember to use the .local version of the module.
 
 **CDN**
+
 You can also use the [jsDelivr CDN](https://cdn.jsdelivr.net/gh/UAIbot/UAIbotJS@v1.0.1/UAIbotJS/UAIbot.js).
 ```javascript
 
