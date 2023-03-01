@@ -9,7 +9,7 @@ This is a version of the UAIbot simulator entirely written in JavaScript. UAIBot
 
 ![](https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExOTNjMTNkNjQxNzg2OTM1NmNhYmQ1YzNkNTA0MTBhNTdkNGVkYTUyZiZjdD1n/WsvRmiVFCd7fYipIDa/giphy.gif)
 <p align="center">
-  <img width="460" height="430" src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExOTNjMTNkNjQxNzg2OTM1NmNhYmQ1YzNkNTA0MTBhNTdkNGVkYTUyZiZjdD1n/WsvRmiVFCd7fYipIDa/giphy.gif">
+  <img width="460" height="430" src="https://i.imgur.com/rP9Flxo.gif">
   <br>
   See a live demo of the Simulation shown above clicking
   <a href="https://jsfiddle.net/eulomelo/jda5nxtq/">here</a>
