@@ -3,7 +3,7 @@
 ⭐Star us on GitHub — it motivates us a lot!
 
 This is a version of the UAIbot simulator entirely written in JavaScript. UAIBot is a web-based robotic simulator. With UAIBot you can create interactive 3D simulations of robotic systems that run directly in the browser (like the one bellow 👇)
-
+![](https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExOTNjMTNkNjQxNzg2OTM1NmNhYmQ1YzNkNTA0MTBhNTdkNGVkYTUyZiZjdD1n/WsvRmiVFCd7fYipIDa/giphy.gif)
 <p align="center">
   <img width="460" height="430" src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExOTNjMTNkNjQxNzg2OTM1NmNhYmQ1YzNkNTA0MTBhNTdkNGVkYTUyZiZjdD1n/WsvRmiVFCd7fYipIDa/giphy.gif">
   <br>
