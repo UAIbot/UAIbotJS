@@ -1,5 +1,6 @@
-
 # UAIbotJS
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FUAIbot%2FUAIbotJS.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FUAIbot%2FUAIbotJS?ref=badge_shield)
+
 ⭐Star us on GitHub — it motivates us a lot!
 
 This is a version of the UAIbot simulator entirely written in JavaScript. UAIBot is a web-based robotic simulator. With UAIBot you can create interactive 3D simulations of robotic systems that run directly in the browser (like the one bellow 👇)
@@ -46,3 +47,6 @@ This repository is maintained actively, so if you face any issue please  [raise 
 ## License
 
 The code is available under the  [MIT License](https://github.com/UAIbot/UAIbotJS/blob/main/LICENSE.md).
+
+
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FUAIbot%2FUAIbotJS.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FUAIbot%2FUAIbotJS?ref=badge_large)
